@@ -29,6 +29,8 @@
     require 'app/Utils.php';
     require 'app/Delta.php';
 
+    require 'app/Logger.php';
+
     // Map for shared memcached:
     // 1) [incrementalno] = array(device, channel, fullpathnameofota.zip)
     // 2) [fullpathnameofota.zip] = array(device, api_level, incremental, timestamp, md5sum)
@@ -51,6 +53,8 @@
 
         $req = Flight::request();
         $postJson = json_decode($req->body);
+        $log = new Logger();
+        $log->logWrite($req->ip . ' ' . $postJson->params->device . ' ' . $postJson->params->source_incremental);
         if ($postJson != NULL && !empty($postJson->params) && !empty($postJson->params->device)) {
             $device = $postJson->params->device;
             $devicePath = realpath('./_builds/'.$device);
