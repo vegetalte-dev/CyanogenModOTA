@@ -39,7 +39,7 @@
 
         public static function getUrl($fileName, $device, $isDelta, $channel) {
             $dldir = $isDelta ? '_deltas' : '_builds';
-            $channelDir = ($channel == 'stable') ? 'stable/' : '';
+            $channelDir = ($channel == 'stable' || $channel == 'snapshot') ? 'snapshot/' : '';
             return 'http://' . $_SERVER['SERVER_NAME'] . '/' . $dldir . '/' . $device . '/' . $channelDir . $fileName;
         }
 
