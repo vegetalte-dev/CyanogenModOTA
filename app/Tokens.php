@@ -45,7 +45,7 @@
         private function getChangelogUrl($url) {
             $temp_url = str_replace('.zip', '.txt', $url);
             $temp1_url = str_replace('http', 'https', $temp_url);
-            return str_replace($_SERVER['SERVER_NAME'], 'raw.githubusercontent.com/bq-rk3x/CHANGES/master', $temp1_url);
+            return str_replace($_SERVER['SERVER_NAME'], 'raw.githubusercontent.com/armani-dev/CHANGES/master', $temp1_url);
         }
 
         private function mcCacheProps($filePath, $device, $channel) {
