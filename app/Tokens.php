@@ -51,7 +51,7 @@
         private function mcCacheProps($filePath, $device, $channel) {
             $mc = Flight::mc();
             $cache = $mc->get($filePath);
-            if (!$cache && Memcached::RES_NOTFOUND == $mc->getResultCode()) {
+            if (true) {
                 $buildpropArray = explode("\n", file_get_contents('zip://'.$filePath.'#system/build.prop'));
                 if ($device == $this->getBuildPropValue($buildpropArray, 'ro.product.device')) {
                     $api_level = intval($this->getBuildPropValue($buildpropArray, 'ro.build.version.sdk'));
