@@ -26,9 +26,9 @@
         private $list = array();
 
         public function __construct($channels, $physicalPath, $device) {
-            if (in_array('stable', $channels) || in_array('snapshot', $channels)) {
-                $stableDir = $physicalPath . '/snapshot';
-                $this->add($stableDir, $device, 'snapshot');
+            if (in_array('stable', $channels) || in_array('nightly', $channels)) {
+                $stableDir = $physicalPath . '/nightly';
+                $this->add($stableDir, $device, 'nightly');
             }
             if (in_array('nightly', $channels)) {
                 $this->add($physicalPath, $device, 'nightly');
