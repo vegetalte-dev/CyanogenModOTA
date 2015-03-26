@@ -61,6 +61,14 @@
                     $cache = array($device, $api_level, $incremental, $timestamp, Utils::getMD5($filePath), $url);
                     $mc->set($filePath, $cache);
                     $mc->set($incremental, array($device, $channel, $filePath));
+                } else if ($device == $this->getBuildPropValue($buildpropArray, 'ro.cm.device')) {
+                    $api_level = intval($this->getBuildPropValue($buildpropArray, 'ro.build.version.sdk'));
+                    $incremental = $this->getBuildPropValue($buildpropArray, 'ro.build.version.incremental');
+                    $timestamp = intval($this->getBuildPropValue($buildpropArray, 'ro.build.date.utc'));
+                    $url = $this->getBuildPropValue($buildpropArray, 'ro.build.ota.url');
+                    $cache = array($device, $api_level, $incremental, $timestamp, Utils::getMD5($filePath), $url);
+                    $mc->set($filePath, $cache);
+                    $mc->set($incremental, array($device, $channel, $filePath));
                 } else {
                     throw new Exception("$device: $filePath is in invalid path");
                 }
