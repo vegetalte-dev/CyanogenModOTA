@@ -37,15 +37,15 @@
             $this->channel = $channel;
             $this->filename = $fileName;
             $this->url = Utils::getUrl($fileName, $device, false, $channel);
-            $this->changes = $this->getChangelogUrl($this->url);
+            $this->changes = $this->getChangelogUrl($this->url, $device);
             $filePath = $physicalPath.'/'.$fileName;
             $this->mcCacheProps($filePath, $device, $channel);
         }
 
-        private function getChangelogUrl($url) {
+        private function getChangelogUrl($url, $device) {
             $temp_url = str_replace('.zip', '.txt', $url);
             $temp1_url = str_replace('http', 'https', $temp_url);
-            return str_replace($_SERVER['SERVER_NAME'], 'raw.githubusercontent.com/armani-dev/CHANGES/master', $temp1_url);
+            return str_replace($_SERVER['SERVER_NAME'], 'raw.githubusercontent.com/'.$device.'-dev/CHANGES/master', $temp1_url);
         }
 
         private function mcCacheProps($filePath, $device, $channel) {
