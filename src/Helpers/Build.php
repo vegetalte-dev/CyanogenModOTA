@@ -64,7 +64,6 @@
             $this->filePath = $physicalPath . '/' . $fileName;
             $this->channel = $this->_getChannel( str_replace( range( 0 , 9 ), '', $tokens[3] ) );
             $this->filename = $fileName;
-            $this->url = $this->_getUrl( '', Flight::cfg()->get('buildsPath') );
             $this->changelogUrl = $this->_getChangelogUrl();
             $this->timestamp = filemtime( $this->filePath );
             if ( $tokens[5] == 'zip' ) {
@@ -72,6 +71,7 @@
                 $this->incremental = $this->getBuildPropValue( 'ro.build.version.incremental' );
                 $this->apiLevel = $this->getBuildPropValue( 'ro.build.version.sdk' );
                 $this->model = $this->getBuildPropValue( 'ro.cm.device' );
+                $this->url = $this->getBuildPropValue( 'ro.build.ota.url' );
             }
     	}
 
@@ -264,7 +264,7 @@
 
             foreach ($this->buildProp as $line) {
                 if ( strpos($line, $key) !== false ) {
-                    $tmp = explode('=', $line);
+                    $tmp = explode('=', $line, 2);
                     $ret = $tmp[1];
                     break;
                 }

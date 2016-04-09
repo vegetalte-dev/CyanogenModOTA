@@ -38,10 +38,6 @@
          * Constructor of the Builds class.
          */
     	public function __construct() {
-            // Set required paths for properly builds Urls later
-            Flight::cfg()->set( 'buildsPath', Flight::cfg()->get('basePath') . '/builds/full' );
-            Flight::cfg()->set( 'deltasPath', Flight::cfg()->get('basePath') . '/builds/delta' );
-
             // Get the current POST request data
             $this->postData = Flight::request()->data;
 
