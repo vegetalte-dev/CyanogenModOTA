@@ -64,7 +64,6 @@
             $this->filePath = $physicalPath . '/' . $fileName;
             $this->channel = $this->_getChannel( str_replace( range( 0 , 9 ), '', $tokens[3] ) );
             $this->filename = $fileName;
-            $this->changelogUrl = $this->_getChangelogUrl();
             $this->timestamp = filemtime( $this->filePath );
             if ( $tokens[5] == 'zip' ) {
                 $this->buildProp = explode( "\n", file_get_contents('zip://'.$this->filePath.'#system/build.prop') );
@@ -72,6 +71,7 @@
                 $this->apiLevel = $this->getBuildPropValue( 'ro.build.version.sdk' );
                 $this->model = $this->getBuildPropValue( 'ro.cm.device' );
                 $this->url = $this->getBuildPropValue( 'ro.build.ota.url' );
+                $this->changelogUrl = $this->_getChangelogUrl();
             }
     	}
 
@@ -250,7 +250,8 @@
          * @return string The changelog URL
          */
         private function _getChangelogUrl(){
-            return str_replace('.zip', '.txt', $this->url);
+            $temp_filename = str_replace('.zip', '.txt', $this->filename);
+            return 'https://raw.githubusercontent.com/'.$this->model.'-dev/CHANGES/master/_builds/'.$this->model.'/'.$this->channel.'/'.$temp_filename;
         }
 
         /**
