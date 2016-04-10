@@ -26,6 +26,7 @@
 
     use \Flight;
     use \JX\CmOta\Helpers\Build;
+    use \JX\CmOta\Helpers\Logger;
 
     class Builds {
 
@@ -40,6 +41,8 @@
     	public function __construct() {
             // Get the current POST request data
             $this->postData = Flight::request()->data;
+            $log = new Logger();
+            $log->logWrite(Flight::request()->ip . ' ' . $this->postData['params']['device'] . ' ' . $this->postData['params']['source_incremental']);
 
             // Internal Initialization routines
     		$this->getBuilds();
