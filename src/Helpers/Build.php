@@ -130,16 +130,12 @@
          * @param string $path The path of the file
          * @return string The MD5 hash
          */
-        public function getMD5($path = ''){
+        public function getMD5(){
             $ret = '';
+            $md5sumFile = $this->filePath.'.md5sum';
 
-            if ( empty($path) ) $path = $this->filePath;
-            // Pretty much faster if it is available
-            if ( $this->commandExists( 'md5sum' ) ) {
-                $tmp = explode("  ", exec( 'md5sum ' . $path));
-                $ret = $tmp[0];
-            } else {
-                $ret = md5_file($path);
+            if (file_exists($md5sumFile)) {
+                list($ret,) = explode("  ", file_get_contents($md5sumFile));
             }
 
             return $ret;
