@@ -103,18 +103,29 @@
 
     	private function getBuilds() {
             // Get physical paths of where the files resides
-            $path = Flight::cfg()->get('realBasePath') . '/builds/full';
-            // Get the file list and parse it
-    		$files = preg_grep( '/^([^.Thumbs])/', scandir( $path ) );
-            if ( count( $files ) > 0  ) {
-                foreach ( $files as $file ) {
-                    $build = new Build( $file, $path);
+			if ($this->postData['params'] != NULL){
+				$tmp_device = $this->postData['params']['device'];
+				$tmp_channels = $this->postData['params']['channels'];
 
-                    if ( $build->isValid( $this->postData['params'] ) ) {
-                        array_push( $this->builds , $build );
-                    }
-                }
-            }
+				if (in_array('stable', $tmp_channels) || in_array('nightly', $tmp_channels)){
+					$path = Flight::cfg()->get('realBasePath') . '/builds/'.$tmp_device.'/nightly';
+					if (file_exists($path)){
+						// Get the file list and parse it
+						$files = preg_grep( '/^([^.Thumbs])/', scandir( $path ) );
+						if ( count( $files ) > 0  ) {
+							foreach ( $files as $file ) {
+								if (strpos($file, 'md5sum') === false){
+									$build = new Build( $file, $path);
+
+									if ( $build->isValid( $this->postData['params'] ) ) {
+										array_push( $this->builds , $build );
+									}
+								}
+							}
+						}
+					}
+				}
+			}
     	}
 
     }

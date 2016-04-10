@@ -7,7 +7,7 @@ A simple OTA REST Server for CyanogenMod OTA Updater System Application
 4. Optional. If just want to test if the REST Server is working, if you go to [http://localhost/CyanogenModOTA](http://localhost/CyanogenModOTA/) you'll be redirected to the builds directory listing.
 
 ## Where do I have to upload the ZIPs that I obtain after the compilation?
-- Full builds should be uploaded to `builds/full` directory.
+- Full builds should be uploaded to `builds/$device/$channel` directory.
 - Delta builds will be automatically built on the `builds/delta` directory.
 
 ## Can I Debug my REST Server somehow?
