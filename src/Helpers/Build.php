@@ -54,18 +54,19 @@
                     1 => [CM VERSION] (ex. 10.1.x, 10.2, 11, etc.)
                     2 => [DATE OF BUILD] (ex. 20140130)
                     3 => [CHANNEL OF THE BUILD] (ex. RC, RC2, NIGHTLY, etc.)
-                    4 => [MODEL] (ex. i9100, i9300, etc.)
-                    5 => [EXTENSION] (ex. zip, txt, etc.)
+                    4 => [SNAPSHOT CODE] ( ex. ZNH0EAO2O0, etc. )
+                    5 => [MODEL] (ex. i9100, i9300, etc.)
+                    6 => [EXTENSION] (ex. zip, txt, etc.)
                 )
             */
-            preg_match_all( '/cm-([0-9\.]+)-(\d+)?-([\w+]+)?-([\w+]+)\.([\w+]+)/', $fileName, $tokens );
+            preg_match_all( '/cm-([0-9\.]+)-(\d+)?-([\w+]+)?([-A-Za-z0-9]+)?-([\w+]+)\.([\w+]+)/', $fileName, $tokens );
             $tokens = $this->removeTrailingDashes( $tokens );
 
             $this->filePath = $physicalPath . '/' . $fileName;
             $this->channel = $this->_getChannel( str_replace( range( 0 , 9 ), '', $tokens[3] ) );
             $this->filename = $fileName;
             $this->timestamp = filemtime( $this->filePath );
-            if ( $tokens[5] == 'zip' ) {
+            if ( $tokens[6] == 'zip' ) {
                 $this->buildProp = explode( "\n", file_get_contents('zip://'.$this->filePath.'#system/build.prop') );
                 $this->incremental = $this->getBuildPropValue( 'ro.build.version.incremental' );
                 $this->apiLevel = $this->getBuildPropValue( 'ro.build.version.sdk' );
@@ -208,7 +209,7 @@
          */
         private function removeTrailingDashes($token){
             foreach ( $token as $key => $value ) {
-                $token[$key] = rtrim( $value[0], '-' );
+                $token[$key] = trim( $value[0], '-' );
             }
             return $token;
         }
