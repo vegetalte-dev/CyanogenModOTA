@@ -245,7 +245,12 @@
          */
         private function _getChangelogUrl(){
             $temp_filename = str_replace('.zip', '.txt', $this->filename);
-            return 'https://raw.githubusercontent.com/'.$this->model.'-dev/CHANGES/master/_builds/'.$this->model.'/'.$this->channel.'/'.$temp_filename;
+            $ret = 'https://raw.githubusercontent.com/'.$this->model.'-dev/CHANGES/master/_builds/'.$this->model.'/'.$this->channel.'/'.$temp_filename;
+
+            if ( file_exists( str_replace('.zip', '.html', $this->filePath) ) )
+				$ret = str_replace('.zip', '.html', $this->url);
+
+            return $ret;
         }
 
         /**
