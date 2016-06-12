@@ -117,7 +117,8 @@
 						$files = preg_grep( '/^([^.Thumbs])/', scandir( $path ) );
 						if ( count( $files ) > 0  ) {
 							foreach ( $files as $file ) {
-								if (strpos($file, 'md5sum') === false){
+								$extension = pathinfo($file, PATHINFO_EXTENSION);
+								if ( $extension == 'zip' ) {
 									$build = new Build( $file, $path);
 
 									if ( $build->isValid( $this->postData['params'] ) ) {
